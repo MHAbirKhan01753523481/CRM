@@ -1,0 +1,127 @@
+﻿@model ProjectMaking.Models.ViewModel.vmManager
+
+<div class="row">
+    <div class="col-lg-12">
+        <form id="editManager">
+            <div class="card">
+                <h5 class="card-header bg-primary text-white mt-0">Edit Manager</h5>
+                <div class="card-body">
+                    <input type="hidden" asp-for="Id" />
+                    <div class="form-material">
+
+                        <div class="row">
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label asp-for="Name"></label>
+                                    <input type="text" asp-for="Name" class="form-control" />
+                                </div>
+                            </div>
+
+
+                        </div><!--end row-->
+
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <input type="file" asp-for="Image" data-height="100" class="dropify" />
+                                </div>
+
+                            </div>
+                            <div class="col-md-4">
+                                <div id="image-preview" class="image-preview" style="display: block;">
+                                    <div  id="text" style="display: block;"></div>
+                                    <img  id="preview" src="@Model.PhotoUrl" />
+                                </div>
+                             
+                            </div>
+                        </div>
+
+
+                        <br />
+                        <div class="row">
+
+                            <div class="col-md-12">
+                                <div class="form-group text-right">
+                                    <input type="submit" id="managerSubmitbtn" class="btn btn-success" value="Submit">
+                                    <input type="button" class="btn btn-danger" data-dismiss="modal" value="Close">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--end card-body-->
+            </div><!--end card-->
+        </form>
+    </div> <!-- end col -->
+
+</div>
+<link href="~/assets/plugins/dropify/css/dropify.min.css" rel="stylesheet" />
+<link href="~/lib/toastr/toastr.min.css" rel="stylesheet" />
+
+<script src="~/assets/plugins/dropify/js/dropify.min.js"></script>
+<script src="~/assets/pages/jquery.form-upload.init.js"></script>
+<script src="~/js/Client/client.js"></script>
+<script src="~/lib/toastr/toastr.min.js"></script>
+@*<script src="~/js/checkImageSize.js"></script>*@
+
+<script>
+
+    $(document).ready(function () {
+
+
+        $("#Image").on("change", function () {
+
+            let maxWidth = 5000;
+            let maxHeight = 5000;
+
+            let input = $(this);
+
+            let preview = $("#preview");
+
+            let image_preview = $("#image-preview");
+
+            fileOnSelect(input, maxWidth, maxHeight, preview, image_preview);
+        });
+
+        //Update manager//
+
+        $("body").on("click", "#managerSubmitbtn", function (e) {
+            e.preventDefault();
+
+            let formData = new FormData();
+
+            formData.append("Image", $(".dropify[name='Image']")[0].files[0]);
+
+            let managerData = objectifyForm($("#editManager").serializeArray());
+
+            for (var key in managerData) {
+                formData.append(key, managerData[key]);
+            }
+
+            $.ajax({
+                url: "/Manager/ManagerEdit/",
+                type: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    if (response == true) {
+
+                        $("#managerEdit-FormDiv").html(response);
+
+                        $("#editManager")[0].reset();
+                        dataTable.fnFilter();
+
+                        $("#managerEdit-Modal").modal('hide'); 
+
+                        toaster.success("Manager Save", "Success!!!").css("background-color","blue");
+                    }
+                    else {
+                        toaster.error("Something Error", "Error!!!").css("background-color", "red");;
+                    }
+                }
+            });
+
+        });
+    });
+</script>

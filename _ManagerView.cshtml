@@ -1,0 +1,142 @@
+﻿@model ProjectMaking.Models.ViewModel.vmManager
+
+<div class="card">
+    <h5 class="card-header bg-primary text-white mt-0">Add Manager</h5>
+    <div class="card-body">
+        <form id="managerCreateForm">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label asp-for="Name"></label>
+                        <input type="text" asp-for="Name" class="form-control" value="" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Designation"></label>
+                        <input type="text" asp-for="Designation" class="form-control" value="" />
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label asp-for="Email"></label>
+                        <input type="text" asp-for="Email" class="form-control" value="" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Bsc"></label>
+                        <input type="text" asp-for="Bsc" class="form-control" value="" />
+                    </div>
+
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label asp-for="Phone"></label>
+                        <input type="text" asp-for="Phone" class="form-control" value="" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="HSC"></label>
+                        <input type="text" asp-for="HSC" class="form-control" value="" />
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label asp-for="Country"></label>
+                        <div style="width:100%;">
+                            <select asp-for="Country" asp-items="@ViewBag.country" class="select2 form-control">
+                                <option value="value">---Select---</option>
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SSC"></label>
+                        <input type="text" asp-for="SSC" class="form-control" value="" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Facebook"></label>
+                        <input type="text" asp-for="Facebook" class="form-control" value="" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Twitter"></label>
+                        <input type="text" asp-for="Twitter" class="form-control" value="" />
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label asp-for="LinkdIn"></label>
+                        <input type="text" asp-for="LinkdIn" class="form-control" value="" />
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="form-group">
+                        <label asp-for="Skill"></label>
+                        <textarea asp-for="Skill" class="form-control" cols="3" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Address"></label>
+                        <textarea class="form-control" cols="3" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label asp-for="Image"></label>
+                        <input type="file" asp-for="Image" class="dropify" value="" />
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group text-right">
+                        <button class="btn btn-primary" id="managerCreateBtn" type="submit">Save</button>
+                        <button class="btn btn-danger" type="reset">Reset</button>
+                    </div>
+
+                </div>
+
+            </div>
+        </form>
+    </div><!--end card-body-->
+</div>
+
+
+   <link href="~/assets/plugins/dropify/css/dropify.min.css" rel="stylesheet" />
+   <script src="~/assets/plugins/dropify/js/dropify.min.js"></script>
+   <script src="~/assets/pages/jquery.form-upload.init.js"></script>
+   <script>
+
+       $(".select2").select2({
+
+       });
+
+       $("body").on("click", "#managerCreateBtn", function (e) {
+           e.preventDefault();
+           let formData = new FormData();
+           formData.append("Image", $(".dropify[name='Image']")[0].files[0]);
+           let managerCreate = objectifyForm($("#managerCreateForm").serializeArray());
+           for (var key in managerCreate) {
+               formData.append(key, managerCreate[key]);
+           }
+           $.ajax({
+               url: "/Manager/ManagerCreate/",
+               type: "POST",
+               data: formData,
+               processData: false,
+               contentType: false,
+               success: function (response) {
+                   $("#managerAdd-FormDiv").html(response);
+               }
+           });
+       });
+   </script>

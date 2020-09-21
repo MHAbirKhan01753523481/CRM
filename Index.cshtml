@@ -1,464 +1,39 @@
 ﻿
 @{
     ViewData["Title"] = "Index";
-
 }
 
 
-<div class="container-fluid">
-    <!-- Page-Title -->
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="page-title-box">
-                <div class="float-right">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a>CRM</a></li>
-                        <li class="breadcrumb-item active">Dashboard</li>
-                    </ol>
-                </div>
-                <h4 class="page-title">DashBoard</h4>
-            </div><!--end page-title-box-->
-        </div><!--end col-->
-    </div><!--end row-->
-    <!-- end page title end breadcrumb -->
-    <div class="row">
-        <div class="col-lg-8">
-            <div class="card">
-                <br />
-                <br />
-                <div class="card-body" style="height:480px;">
-                    <div id="crm_dash_2" class="apex-charts"></div>
-                </div><!--end card-body-->
-            </div><!--end card-->
-        </div><!-- end col-->
-        <div class="col-lg-4">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="card crm-data-card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-sm-4 align-self-center">
-                                    <div class="data-icon">
-                                        <i class="far fa-smile rounded-circle bg-warning"></i>
-                                    </div>
-                                </div><!-- end col-->
-                                <div class="col-sm-8">
-                                    @if (@ViewBag.items > 1000)
-                                    {
-                                        <h3>@ViewBag.items K C</h3>
-                                    }
-                                    else
-                                    {
-                                        <h3>@ViewBag.items C</h3>
-                                    }
+<div class="card">
+    <h5 class="card-header bg-primary text-white mt-0">Manager Chart</h5>
+    <div class="card-body">
+        <div class="text-right">
+            <ul class="list-inline">
 
-                                    <p class="text-muted font-14 mb-0">Happy Customer</p>
-                                </div><!-- end col-->
-                            </div><!-- end row-->
-                        </div><!--end card-body-->
-                    </div><!--end card-->
-                </div><!-- end col-->
+                <li class="list-inline-item">
+                    <button type="button" class=" btn btn-primary managerAdd"><i class="fa fa-plus"></i> Add New</button>
+                </li>
+            </ul>
+        </div>
+        <table style="text-align:justify;" class="table table-hover" id="managerDataList">
+            <thead class="thead-light">
+                <tr>
+                    <th>Photo</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Address</th>
+                    <th>Action</th>
+                </tr><!--end tr-->
+            </thead>
 
-                <div class="col-md-6 text-center">
-                    <div class="card">
-                        <div class="card-body" style="height:150px;">
-                            <h5 class="text-success text-center">Active Client</h5>
-                            <input class="knob" data-width="70" data-displayPrevious=true data-bgColor="#eff2f9" data-fgColor="#ff5da0" data-thickness=".4" value="@ViewBag.items">
-                        </div><!--end card-body-->
-                    </div><!--end card-->
-                </div><!-- end col-->
+            <tbody>
+            </tbody>
+        </table>
+    </div><!--end card-body-->
+</div><!--end card-->
 
-            </div><!--end row-->
-
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="card crm-data-card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-sm-4 align-self-center">
-                                    <div class="data-icon">
-                                        <i class="far fa-smile rounded-circle bg-secondary"></i>
-                                    </div>
-                                </div><!-- end col-->
-                                <div class="col-sm-8">
-                                    @if (@ViewBag.items > 1000)
-                                    {
-                                        <h3>@ViewBag.items K C</h3>
-                                    }
-                                    else
-                                    {
-                                        <h3>@ViewBag.items C</h3>
-                                    }
-
-                                    <p class="text-muted font-14 mb-0">Happy Customer</p>
-                                </div><!-- end col-->
-                            </div><!-- end row-->
-                        </div><!--end card-body-->
-                    </div><!--end card-->
-                </div><!-- end col-->
-                <div class="col-md-6">
-                    <div class="card crm-data-card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-sm-4 align-self-center">
-                                    <div class="data-icon">
-                                        <i class="far fa-smile rounded-circle bg-success"></i>
-                                    </div>
-                                </div><!-- end col-->
-                                <div class="col-sm-8">
-                                    @if (@ViewBag.items > 1000)
-                                    {
-                                        <h3>@ViewBag.items K C</h3>
-                                    }
-                                    else
-                                    {
-                                        <h3>@ViewBag.items C</h3>
-                                    }
-
-                                    <p class="text-muted font-14 mb-0">Happy Customer</p>
-                                </div><!-- end col-->
-                            </div><!-- end row-->
-                        </div><!--end card-body-->
-                    </div><!--end card-->
-                </div><!-- end col-->
-            </div><!--end row-->
-            <div class="card">
-                <div class="card-body">
-                    <div class="row mb-3">
-                        <div class="col-sm-6">
-                            <p class="mb-0 text-muted font-13"><i class="mdi mdi-album mr-2 text-secondary"></i>New Leads</p>
-                        </div><!-- end col-->
-                        <div class="col-sm-6">
-                            <p class="mb-0 text-muted font-13"><i class="mdi mdi-album mr-2 text-warning"></i>New Leads Target</p>
-                        </div><!-- end col-->
-                    </div><!-- end row-->
-
-                    @if (@ViewBag.leads <= 1 && @ViewBag.leads <= 10)
-                    {
-                        <div class="progress bg-warning mb-3" style="height:5px;">
-
-                            <div class="progress-bar bg-secondary" role="progressbar" style="width:10%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100">
-
-                            </div>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="progress bg-warning mb-3" style="height:5px;">
-
-                            <div class="progress-bar bg-secondary" role="progressbar" style="width: 50%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100">
-
-                            </div>
-                        </div>
-                    }
-
-                    <div class="d-flex justify-content-between">
-                        <p class="mb-0 text-muted text-truncate align-self-center"><span class="text-success"><i class="mdi mdi-trending-up"></i>@ViewBag.itemLead %</span> Up From Last Week</p>
-                        <button type="button" class="btn btn-gradient-primary btn-sm">Leads Report</button>
-                    </div>
-                </div><!--end card-body-->
-            </div><!--end card-->
-        </div><!--end col-->
-
-    </div><!--end row-->
-
-    <div class="row">
-        <div class="col-lg-4">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="header-title mt-0 mb-3">Emails Report</h4>
-                    <div class="">
-                        <div id="d2_performance" class="apex-charts"></div>
-                    </div>
-                </div><!--end card-body-->
-            </div><!--end card-->
-        </div><!--end col-->
-        <div class="col-lg-8">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="header-title mt-0">Leads By Country</h4>
-                    <div class="row">
-                        <div class="col-lg-8">
-                            <div id="world-map-markers" class="crm-dash-map drop-shadow-map"></div>
-                        </div><!--end col-->
-                        <div class="col-lg-4 align-self-center">
-                            <div class="mt-3">
-                                <span class="text-secondary">Bangladesh</span>
-                                <small class="float-right text-muted ml-3 font-13">@ViewBag.item %</small>
-                                <div class="progress mt-2" style="height:3px;">
-                                    @if (@ViewBag.item <= 0)
-                                    {
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width:0%; border-radius:5px;" aria-valuenow="42" aria-valuemin="0" aria-valuemax="100"></div>
-                                    }
-                                    else if (@ViewBag.item >= 10)
-                                    {
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width:10%; border-radius:5px;" aria-valuenow="42" aria-valuemin="0" aria-valuemax="100"></div>
-                                    }
-                                    else if (@ViewBag.item >= 20)
-                                    {
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width:20%; border-radius:5px;" aria-valuenow="42" aria-valuemin="0" aria-valuemax="100"></div>
-                                    }
-                                    else if (@ViewBag.item >= 30)
-                                    {
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width:30%; border-radius:5px;" aria-valuenow="42" aria-valuemin="0" aria-valuemax="100"></div>
-                                    }
-                                    else if (@ViewBag.item >= 40)
-                                    {
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width:40%; border-radius:5px;" aria-valuenow="42" aria-valuemin="0" aria-valuemax="100"></div>
-                                    }
-                                    else if (@ViewBag.item >= 50)
-                                    {
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width:50%; border-radius:5px;" aria-valuenow="42" aria-valuemin="0" aria-valuemax="100"></div>
-                                    }
-                                    else if (@ViewBag.item >= 60)
-                                    {
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width:60%; border-radius:5px;" aria-valuenow="42" aria-valuemin="0" aria-valuemax="100"></div>
-                                    }
-                                    else if (@ViewBag.item >= 70)
-                                    {
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width:70%; border-radius:5px;" aria-valuenow="42" aria-valuemin="0" aria-valuemax="100"></div>
-                                    }
-                                    else if (@ViewBag.item >= 80)
-                                    {
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width:80%; border-radius:5px;" aria-valuenow="42" aria-valuemin="0" aria-valuemax="100"></div>
-                                    }
-                                    else if (@ViewBag.item >= 90)
-                                    {
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width:90%; border-radius:5px;" aria-valuenow="42" aria-valuemin="0" aria-valuemax="100"></div>
-                                    }
-                                    else if (@ViewBag.item >= 100)
-                                    {
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width:100%; border-radius:5px;" aria-valuenow="42" aria-valuemin="0" aria-valuemax="100"></div>
-                                    }
-                                    else
-                                    {
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width:5%; border-radius:5px;" aria-valuenow="42" aria-valuemin="0" aria-valuemax="100"></div>
-                                    }
-
-                                </div>
-                            </div>
-
-
-                            <div class="mt-3">
-                                <span class="text-secondary">India</span>
-                                <small class="float-right text-muted ml-3 font-13">@ViewBag.Country1 %</small>
-                                <div class="progress mt-2" style="height:3px;">
-                                    @if (@ViewBag.Country1 <= 0)
-                                    {
-                                        <div class="progress-bar bg-purple" role="progressbar" style="width:0%; border-radius:5px;" aria-valuenow="48" aria-valuemin="0" aria-valuemax="100"></div>
-                                    }
-                                    else if (@ViewBag.Country1 >= 10)
-                                    {
-                                        <div class="progress-bar bg-purple" role="progressbar" style="width: 10%; border-radius:5px;" aria-valuenow="48" aria-valuemin="0" aria-valuemax="100"></div>
-                                    }
-                                    else if (@ViewBag.Country1 >= 20)
-                                    {
-                                        <div class="progress-bar bg-purple" role="progressbar" style="width: 20%; border-radius:5px;" aria-valuenow="48" aria-valuemin="0" aria-valuemax="100"></div>
-                                    }
-                                    else if (@ViewBag.Country1 >= 30)
-                                    {
-                                        <div class="progress-bar bg-purple" role="progressbar" style="width: 30%; border-radius:5px;" aria-valuenow="48" aria-valuemin="0" aria-valuemax="100"></div>
-                                    }
-                                    else if (@ViewBag.Country1 >= 40)
-                                    {
-                                        <div class="progress-bar bg-purple" role="progressbar" style="width: 40%; border-radius:5px;" aria-valuenow="48" aria-valuemin="0" aria-valuemax="100"></div>
-                                    }
-                                    else if (@ViewBag.Country1 >= 50)
-                                    {
-                                        <div class="progress-bar bg-purple" role="progressbar" style="width: 50%; border-radius:5px;" aria-valuenow="48" aria-valuemin="0" aria-valuemax="100"></div>
-                                    }
-                                    else if (@ViewBag.Country1 >= 60)
-                                    {
-                                        <div class="progress-bar bg-purple" role="progressbar" style="width: 60%; border-radius:5px;" aria-valuenow="48" aria-valuemin="0" aria-valuemax="100"></div>
-                                    }
-                                    else if (@ViewBag.Country1 >= 70)
-                                    {
-                                        <div class="progress-bar bg-purple" role="progressbar" style="width: 70%; border-radius:5px;" aria-valuenow="48" aria-valuemin="0" aria-valuemax="100"></div>
-                                    }
-                                    else if (@ViewBag.Country1 >= 80)
-                                    {
-                                        <div class="progress-bar bg-purple" role="progressbar" style="width: 80%; border-radius:5px;" aria-valuenow="48" aria-valuemin="0" aria-valuemax="100"></div>
-                                    }
-                                    else if (@ViewBag.Country1 >= 90)
-                                    {
-                                        <div class="progress-bar bg-purple" role="progressbar" style="width: 90%; border-radius:5px;" aria-valuenow="48" aria-valuemin="0" aria-valuemax="100"></div>
-                                    }
-                                    else if (@ViewBag.Country1 >= 100)
-                                    {
-                                        <div class="progress-bar bg-purple" role="progressbar" style="width: 100%; border-radius:5px;" aria-valuenow="48" aria-valuemin="0" aria-valuemax="100"></div>
-                                    }
-                                    else
-                                    {
-                                        <div class="progress-bar bg-purple" role="progressbar" style="width: 5%; border-radius:5px;" aria-valuenow="48" aria-valuemin="0" aria-valuemax="100"></div>
-                                    }
-
-                                </div>
-                            </div>
-
-                            <div class="mt-3">
-                                <span class="text-primary">USA</span>
-                                <small class="float-right text-muted ml-3 font-13">@ViewBag.Country %</small>
-
-                                <div class="progress mt-2" style="height:3px;">
-                                    @if (@ViewBag.Country <= 0)
-                                    {
-                                        <div class="progress-bar bg-success" role="progressbar" style="width:0%; border-radius:5px;" aria-valuenow="48" aria-valuemin="0" aria-valuemax="100"></div>
-                                    }
-                                    else if (@ViewBag.Country >= 10)
-                                    {
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 10%; border-radius:5px;" aria-valuenow="48" aria-valuemin="0" aria-valuemax="100"></div>
-                                    }
-                                    else if (@ViewBag.Country >= 20)
-                                    {
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 20%; border-radius:5px;" aria-valuenow="48" aria-valuemin="0" aria-valuemax="100"></div>
-                                    }
-                                    else if (@ViewBag.Country >= 30)
-                                    {
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 30%; border-radius:5px;" aria-valuenow="48" aria-valuemin="0" aria-valuemax="100"></div>
-                                    }
-                                    else if (@ViewBag.Country >= 40)
-                                    {
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 40%; border-radius:5px;" aria-valuenow="48" aria-valuemin="0" aria-valuemax="100"></div>
-                                    }
-                                    else if (@ViewBag.Country >= 50)
-                                    {
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 50%; border-radius:5px;" aria-valuenow="48" aria-valuemin="0" aria-valuemax="100"></div>
-                                    }
-                                    else if (@ViewBag.Country >= 60)
-                                    {
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 60%; border-radius:5px;" aria-valuenow="48" aria-valuemin="0" aria-valuemax="100"></div>
-                                    }
-                                    else if (@ViewBag.Country >= 70)
-                                    {
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 70%; border-radius:5px;" aria-valuenow="48" aria-valuemin="0" aria-valuemax="100"></div>
-                                    }
-                                    else if (@ViewBag.Country >= 80)
-                                    {
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 80%; border-radius:5px;" aria-valuenow="48" aria-valuemin="0" aria-valuemax="100"></div>
-                                    }
-                                    else if (@ViewBag.Country >= 90)
-                                    {
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 90%; border-radius:5px;" aria-valuenow="48" aria-valuemin="0" aria-valuemax="100"></div>
-                                    }
-                                    else if (@ViewBag.Country >= 100)
-                                    {
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 100%; border-radius:5px;" aria-valuenow="48" aria-valuemin="0" aria-valuemax="100"></div>
-                                    }
-                                    else
-                                    {
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 5%; border-radius:5px;" aria-valuenow="48" aria-valuemin="0" aria-valuemax="100"></div>
-                                    }
-
-                                </div>
-                            </div>
-
-
-                        </div><!--end col-->
-                    </div><!--end row-->
-                </div><!--end card-body-->
-            </div><!--end card-->
-        </div><!--end col-->
-    </div><!--end row-->
-
-    <div class="row">
-
-        <div class="col-lg-8">
-
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="header-title mt-0 mb-3">Leads Report</h4>
-                    <div class="table-responsive">
-                        <table class="table" id="clientDataTable">
-                            <thead class="thead-light">
-                                <tr>
-
-                                    <th>Lead</th>
-                                    <th></th>
-                                    <th>Email</th>
-                                    <th>Phone No</th>
-                                    <th>Address</th>
-                                    <th>Status</th>
-                                    <th></th>
-                                </tr><!--end tr-->
-                            </thead>
-
-                            <tbody>
-                            </tbody>
-                        </table>
-                    </div>
-                </div><!--end card-body-->
-            </div><!--end card-->
-            <!--end col-->
-            <!--end col-->
-            <!--end card-->
-        </div><!--end col-->
-        <div class="col-lg-4">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="header-title mt-0 mb-3 text-primary-light">Sales Activity</h4>
-                    <div class="slimscroll crm-dash-activity">
-                        <div class="activity">
-                            @foreach (var item in ViewBag.workTask)
-                            {
-                                <i class="@item.IconClass @item.IconColor"></i>
-                                <div class="time-item">
-                                    <div class="item-info">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <h6 class="m-0 ">@item.Name</h6>
-                                            <span class="text-muted badge badge-soft-primary"> @item.CompliteTime.ToString("dd/mm/yyyy")</span>
-                                        </div>
-
-                                        @{ 
-                                            char[] requirmentArray = item.Requirement.ToCharArray();
-                                            string requirment = string.Empty;
-                                        }
-                                        @if (requirmentArray.Length >250)
-                                        {
-                                            for (int i = 0; i <200 ; i++)
-                                            {
-                                                requirment += requirmentArray[i];
-                                            }
-                                        }
-                                        else
-                                        {
-                                            for (int i = 0; i <150; i++)
-                                            {
-                                                requirment += requirmentArray[i];
-                                            }
-                                        }
-                                        <p style="text-align:justify;" class="text-muted mt-3">
-                                            @requirment
-                                            @*<a href="#" class="text-info badge badge-secondary">[more info]</a>*@
-                                            @*<span class="badge badge-success" > Replay: @item.Reply</span>*@
-                                            <a href="/DashBord/Details/@item.Id" class="badge badge-soft-primary">...More</a>
-                                        </p>
-                                      
-                                        <div style="font-size:14px;" class="badge badge-primary">
-                                            @for (int i = 0; i < item.Mark; i++)
-                                            {
-                                                <span class="fa fa-star text-warning"></span>
-                                            }
-                                            @for (int i = 0; i < (7 - (item.Mark)); i++)
-                                            {
-                                                <span class="fa fa-star"></span>
-                                            }
-                                            <span class="badge badge-primary"> @item.SalesMan.Name</span>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            }
-
-
-                        </div><!--end activity-->
-                    </div><!--end crm-dash-activity-->
-                </div><!--end card-body-->
-            </div><!--end card-->
-        </div><!--end col-->
-    </div><!--end row-->
-</div>
-
-<div id="managerTaskList-Modal"
+<div id="managerAdd-Modal"
      class="modal fade"
      tabindex="-1"
      role="dialog"
@@ -466,21 +41,32 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                @*<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>*@
             </div>
             <div class="modal-body">
-                <div id="managerTaskList-FormDiv"></div>
+                <div id="managerAdd-FormDiv"></div>
             </div>
         </div>
     </div>
 </div>
 
+<div id="managerEdit-Modal"
+     class="modal fade"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body">
+                <div id="managerEdit-FormDiv"></div>
+            </div>
+        </div>
+    </div>
+</div>
 
 @section Scripts{
-    <script src="~/js/Client/client.js"></script>
-    <script src="~/js/WorkTaskView/workTaskView.js"></script>
 
-
+    <script src="~/js/Manager/manager.js"></script>
 }
+
