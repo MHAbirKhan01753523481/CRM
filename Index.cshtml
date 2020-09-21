@@ -1,29 +1,209 @@
-﻿
+﻿@model ProjectMaking.Models.ViewModel.vmWorkTask
 @{
     ViewData["Title"] = "Index";
 }
-<div class="card">
-    <div class="card-body">
-        <table class="table" id="workSalesTaskData">
-            <thead class="thead-light">
-                <tr>
-                    <th>Task Name</th>
-                    <th>Requirment</th>
-                    <th>Manager</th>
-                    <th>Mark</th>
-                    <th></th>
-                </tr><!--end tr-->
-            </thead>
 
-            <tbody>
-            </tbody>
-        </table>
-    </div><!--end card-body-->
-</div><!--end card-->
+<br />
+<div  class="row">
+    <div class="col-lg-5">
+        <form id="workTaskForm">
+            <div class="card" style="background-color:#ffffff;">
+                <h5 class="card-header bg-primary text-white mt-0">Add Sales Task</h5>
+                <div class="card-body">
+               
+                    <div class="form-material">
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label asp-for="Name"></label>
+                                    <input type="text" asp-for="Name" class="form-control" placeholder="Task Name" />
+                                </div>
+
+                            </div><!--end col-->
+
+                        </div><!--end row-->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="IconClass"></label>
+                                    <select asp-for="IconClass" asp-items="@ViewBag.IconClass" class="select2 form-control">
+                                        <option>--Select---</option>
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="IconColor"></label>
+                                    <select asp-for="IconColor" asp-items="@ViewBag.IconColor" class="select2 form-control">
+                                        <option>--Select---</option>
+                                    </select>
+                                </div>
+                            </div><!--end col-->
+
+                        </div><!--end row-->
+                        <br />
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="ManagerId"></label>
+                                    <select asp-for="ManagerId" asp-items="@ViewBag.manager" class="select2 form-control">
+                                        <option value="value">---Select---</option>
+                                    </select>
+                                </div>
+
+                            </div><!--end col-->
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="SalesManId"></label>
+                                    <select asp-for="SalesManId" asp-items="@ViewBag.salesMan" class="select2 form-control">
+                                        <option value="value">---Select---</option>
+                                    </select>
+                                </div>
+
+                            </div><!--end col-->
+
+                        </div><!--end row-->
+                        <br />
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="ToDate"></label>
+                                    <input type="text" asp-for="ToDate" class="form-control datepicker" placeholder="End Date">
+                                </div>
+
+                            </div><!--end col-->
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="EndDate"></label>
+                                    <input type="text" asp-for="EndDate" class="form-control datepicker" placeholder="End Date">
+                                </div>
+
+                            </div><!--end col-->
+
+                        </div><!--end row-->
+
+                        <br />
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label asp-for="Requirement"></label>
+                                    <textarea asp-for="Requirement" class="form-control" rows="4" placeholder="Work Requirment"></textarea>
+                                </div>
+
+                            </div><!--end col-->
+
+                        </div><!--end row-->
+
+                        <br />
+                        <div class="row">
+                            <div class="col-md-6">
+
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group text-right">
+
+                                    @*<input type="submit" id="workTaskSaveBtn" class="btn btn-success" value="Submit">*@
+                                    <button type="submit"id="workTaskSaveBtn" class="btn btn-primary">Save </button>
+                                    <input type="reset" id="workTaskresetBtn" class="btn btn-danger" value="Reset">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--end card-body-->
+            </div><!--end card-->
+        </form>
+    </div> <!-- end col -->
+    <div class="col-lg-7">
+        <div class="card" style="background-color:#ffffff;">
+            <h5 class="card-header bg-primary text-white mt-0">Task List</h5> 
+            <div class="card-body">
+                <table style="text-align:justify;" class="table table-hover" id="workTaskTable">
+                    <thead  class="thead-light">
+                        <tr>
+                            <th>Task Name</th>
+                            <th >Requirment</th>
+                            <th>Sales Man</th>
+                            <th>Mark</th>
+                            <th></th>
+                        </tr><!--end tr-->
+                    </thead>
+
+                    <tbody>
+                    </tbody>
+                </table>
+            </div><!--end card-body-->
+        </div><!--end card-->
+    </div><!--end col-->
+</div>
+
+<div id="workTask-Modal"
+     class="modal fade"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                @*<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>*@
+            </div>
+            <div class="modal-body">
+                <div id="workTask-FormDiv"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div id="replayTask-Modal"
+     class="modal fade"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                @*<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>*@
+            </div>
+            <div class="modal-body">
+                <div id="replayTask-FormDiv"></div>
+            </div>
+        </div>
+    </div>
+</div>
 
 @section Scripts{
-
- 
     <script src="~/js/WorkTask/workTask.js"></script>
+    <script src="~/js/WorkTaskView/workTaskView.js"></script>
+
+    <script>
+        $('.datepicker').bootstrapMaterialDatePicker({
+            weekStart: 0, time: false, format: 'DD MMMM YYYY hh:mm:ss'
+        });
+      
+        $("#workTaskForm").validate({
+            ignore: false,
+            rules: {
+                Name: {
+                    required: true,
+                },
+                ToDate: {
+                    required: true,
+                },
+                EndDate: {
+                    required: true,
+                },
+
+            },
+        });
+    </script>
 
 }

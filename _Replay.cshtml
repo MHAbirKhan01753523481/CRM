@@ -1,0 +1,100 @@
+﻿
+@model ProjectMaking.Models.ViewModel.vmWorkTask
+
+<link href="~/assets/plugins/rating/themes/bars-1to10.css" rel="stylesheet" />
+<link href="~/assets/plugins/rating/themes/bars-horizontal.css" rel="stylesheet" />
+<link href="~/assets/plugins/rating/themes/bars-pill.css" rel="stylesheet" />
+<link href="~/assets/plugins/rating/themes/bars-movie.css" rel="stylesheet" />
+<link href="~/assets/plugins/rating/themes/bars-reversed.css" rel="stylesheet" />
+<link href="~/assets/plugins/rating/themes/bars-square.css" rel="stylesheet" />
+<link href="~/assets/plugins/rating/themes/fontawesome-stars.css" rel="stylesheet" />
+<link href="~/assets/plugins/rating/themes/bootstrap-stars.css" rel="stylesheet" />
+<link href="~/assets/plugins/rating/themes/css-stars.css" rel="stylesheet" />
+<link href="~/assets/plugins/rating/themes/rating.css" rel="stylesheet" />
+<link href="~/assets/plugins/rating/themes/fontawesome-stars-o.css" rel="stylesheet" />
+
+
+<div class="row">
+    <div class="col-md-12 ">
+        <form id="employeeTaskReplayForm">
+            <div class="card">
+                <div class="bg-primary">
+                    <h5 class="card-header bg-primary text-white mt-0">Add Sales Task</h5>
+                </div>
+                <br />
+                <div class="card-body">
+                    <input type="hidden" asp-for="Id" />
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                    <label asp-for="Mark"></label>
+                                    <select asp-for="Mark" id="example-fontawesome">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                    </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label asp-for="Comment"></label>
+                                <textarea  asp-for="Comment" class="form-control" cols="5" rows="5" placeholder="Write Your Comment...."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="form-group text-right">
+                        <button type="button" id="SaveRatings" class="btn btn-primary editbtn">Save</button>
+                        <button type="reset" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<script src="~/assets/plugins/rating/jquery.barrating.min.js"></script>
+<script src="~/assets/pages/jquery.rating.init.js"></script>
+
+<script src="~/js/WorkTask/workTask.js"></script>
+
+<script>
+
+    $("body").on("click", "#SaveRatings", function () {
+        let replayObj = {
+            Id:$("#Id").val(),
+            Mark: $('.br-current').attr("data-rating-value"),
+            Comment: $("#Comment").val(),
+        };
+        $.ajax({
+            url: "/WorkTask/ReplayeUpdate/",
+            type: "POST",
+            data: replayObj,
+            dataType: "JSON",
+            success: function (response) {
+               
+                if (response == true) {
+
+                    $("#replayTask-FormDiv").html(response);
+                    $("#employeeTaskReplayForm")[0].reset();
+                    dataTable.fnFilters();
+                    response = "Save Successfully";
+                }
+                else {
+                    response = "Save Successfully";
+                    $("#replayTask-FormDiv").modal('hide');
+                }
+             
+               
+            }
+        });
+    });
+</script>

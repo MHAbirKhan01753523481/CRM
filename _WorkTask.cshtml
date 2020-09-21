@@ -1,0 +1,103 @@
+﻿
+@model ProjectMaking.Models.ViewModel.vmWorkTask
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <form id="workTaskForm">
+            <div class="card">
+                <h5 class="card-header bg-soft-primary text-white mt-0">Add Sales Task</h5>
+                <div class="card-body">
+                    <input type="hidden" asp-for="Id" />
+                    <div class="form-material">
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="PaidAmmount"></label>
+                                    <input type="number" asp-for="PaidAmmount" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="DewAmmount"></label>
+                                    <input type="number" asp-for="DewAmmount" class="form-control" />
+                                </div>
+                            </div><!--end col-->
+
+                        </div><!--end row-->
+                      
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label asp-for="Reply"></label>
+                                    <textarea asp-for="Reply" class="form-control" rows="4" placeholder="Work Requirment"></textarea>
+                                </div>
+
+                            </div><!--end col-->
+
+                        </div><!--end row-->
+
+                        <br />
+                        <div class="row">
+
+                            <div class="col-md-12">
+                                <div class="form-group text-right">
+                                    <input type="submit" id="workTaskreplayBtn" class="btn btn-success" value="Submit">
+                                    <input type="button" class="btn btn-danger" data-dismiss="modal" value="Close">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--end card-body-->
+            </div><!--end card-->
+        </form>
+    </div> <!-- end col -->
+
+</div>
+
+<script>
+    $('.datepicker').bootstrapMaterialDatePicker({
+        weekStart: 0, time: false, format: ' YYYY MMMM DD hh mm ss'
+    });
+</script>
+
+<script src="~/js/WorkTask/workTask.js"></script>
+
+<script>
+    $(".select2").select2({
+
+    });
+
+    $("body").on("click", "#workTaskreplayBtn", function (e) {
+        e.preventDefault();
+
+        let worktaskreplay = {
+            Id: $("#Id").val(),
+           // Complitetime: $("#ChangeCompliteTime").val(),
+            PaidAmmount: $("#PaidAmmount").val(),
+            DewAmmount: $("#DewAmmount").val(),
+            Reply: $("#Reply").val(),
+           
+        };
+        console.log(worktaskreplay);
+        $.ajax({
+            url: "/WorkTask/WorkTaskReplay/",
+            type: "POST",
+            data: worktaskreplay,
+            success: function (response) {
+                if (response == true) {
+                    toaster.success("Sales Report Save", "Success!!!");
+                    $("#workTask-FormDiv").html(response);
+                    dataTable.fnFilters();
+                    $("#workTaskForm")[0].reset();
+                    $("#workTaskReport-Modal").modal('hide');
+                } else {
+                    toaster.error("Something Error", "Error!!!");
+                }
+                
+            }
+        });
+    });
+
+</script>
